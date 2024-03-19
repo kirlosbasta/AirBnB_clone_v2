@@ -13,7 +13,7 @@ class test_Console(unittest.TestCase):
     def setUp(self) -> None:
         ''' '''
         pass
-    
+
     def tearDown(self):
         '''tear down'''
         try:
