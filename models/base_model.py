@@ -6,8 +6,8 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
 import models
 
-if models.HBNB_TYPE_STORAGE == 'db':
-    Base = declarative_base()
+
+Base = declarative_base()
 
 
 
