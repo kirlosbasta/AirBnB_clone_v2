@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 '''Module contain DBStorage'''
-from sqlalchemy import create_engine, MetaData
+from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 import os
 from models.base_model import BaseModel, Base
@@ -12,7 +12,8 @@ from models.amenity import Amenity
 from models.review import Review
 classes = {
     'State': State, 'City': City, 'User': User,
-    'Place': Place, 'Amenity': Amenity
+    'Place': Place, 'Amenity': Amenity,
+    'Review': Review
         }
 
 
