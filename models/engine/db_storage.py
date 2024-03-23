@@ -12,7 +12,7 @@ from models.amenity import Amenity
 from models.review import Review
 classes = {
     'State': State, 'City': City, 'User': User,
-    'Place': Place
+    'Place': Place, 'Amenity': Amenity
         }
 
 
