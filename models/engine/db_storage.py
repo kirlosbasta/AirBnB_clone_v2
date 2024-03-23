@@ -11,7 +11,8 @@ from models.city import City
 from models.amenity import Amenity
 from models.review import Review
 classes = {
-    'State': State, 'City': City, 'User': User
+    'State': State, 'City': City, 'User': User,
+    'Place': Place
         }
 
 
