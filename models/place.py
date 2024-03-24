@@ -23,7 +23,8 @@ class Place(BaseModel, Base):
     price_by_night = Column(Integer, nullable=False, default=0)
     latitude = Column(Float)
     longitude = Column(Float)
-    amenities = relationship('Amenity', secondary=place_amenity, viewonly=False, backref='places')
+    amenities = relationship('Amenity', secondary=place_amenity,
+                             viewonly=False, backref='places')
     reviews = relationship('Review', backref='place')
     amenity_ids = []
 
@@ -36,10 +37,11 @@ class Place(BaseModel, Base):
                 if obj.id in Place.amenity_ids:
                     amenity.append(obj)
             return amenity
+
         @amenities.setter
         def amenities(self, obj):
             '''setter'''
-            if type(obj) == 'Amenity':
+            if isinstance(obj, Amenity):
                 Place.amenity_ids.append(obj.id)
 
         @property
