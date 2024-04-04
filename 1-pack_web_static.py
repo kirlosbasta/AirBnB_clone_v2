@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/home/koko/KOKO/ALX/AirBnB_clone_v2/myenv/bin/python3
 '''Fabric script that generates a .tgz archive from the contents
 of the web_static folder of AirBnB Clone repo'''
 from fabric.api import *
