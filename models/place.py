@@ -2,12 +2,17 @@
 """ Place Module for HBNB project """
 from models.base_model import BaseModel, Base
 from models.review import Review
-from models.amenity import Amenity
 from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
 from sqlalchemy.orm import relationship
 from os import getenv
 import models
-from models.amenity import place_amenity
+
+
+place_amenity = Table('place_amenity', Base.metadata,
+                      Column('place_id', ForeignKey('places.id'),
+                             primary_key=True),
+                      Column('amenity_id', ForeignKey('amenities.id'),
+                             primary_key=True))
 
 
 class Place(BaseModel, Base):
@@ -24,7 +29,7 @@ class Place(BaseModel, Base):
     latitude = Column(Float)
     longitude = Column(Float)
     amenities = relationship('Amenity', secondary=place_amenity,
-                             viewonly=False, backref='places')
+                             viewonly=False, backref='place_amenity')
     reviews = relationship('Review', backref='place')
     amenity_ids = []
 
@@ -32,6 +37,7 @@ class Place(BaseModel, Base):
         @property
         def amenities(self):
             '''returns the list of Amenity instances'''
+            from models.amenity import Amenity
             amenity = []
             for obj in models.storage.all(Amenity).values():
                 if obj.id in Place.amenity_ids:
@@ -41,6 +47,7 @@ class Place(BaseModel, Base):
         @amenities.setter
         def amenities(self, obj):
             '''setter'''
+            from models.amenity import Amenity
             if isinstance(obj, Amenity):
                 Place.amenity_ids.append(obj.id)
 
