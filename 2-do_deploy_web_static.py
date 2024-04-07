@@ -27,19 +27,27 @@ def do_deploy(archive_path):
     """distributes an archive to the web servers"""
     if exists(archive_path) is False:
         return False
-    try:
-        file = archive_path.split("/")[-1]
-        file_noEx = file.split(".")[0]
-        path = "/data/web_static/releases/"
-        put(archive_path, '/tmp/')
-        run("rm -rf {}{}".format(path, file_noEx))
-        sudo('mkdir -p {}{}/'.format(path, file_noEx))
-        run('tar -xzf /tmp/{} -C {}{}/'.format(file, path, file_noEx))
-        run('rm /tmp/{}'.format(file))
-        run('mv {0}{1}/web_static/* {0}{1}/'.format(path, file_noEx))
-        run('rm -rf {}{}/web_static'.format(path, file_noEx))
-        run('rm -rf /data/web_static/current')
-        run('ln -s {}{}/ /data/web_static/current'.format(path, file_noEx))
-        return True
-    except Exception:
+    compressedFile = archive_path.split("/")[-1]
+    fileName = compressedFile.split(".")[0]
+    upload_path = "/tmp/{}".format(compressedFile)
+    if put(archive_path, upload_path).failed:
         return False
+    current_release = '/data/web_static/releases/{}'.format(fileName)
+    if run("rm -rf {}".format(current_release)).failed:
+        return False
+    if run("mkdir -p {}".format(current_release)).failed:
+        return False
+    uncompress = "tar -xzf /tmp/{} -C {}".format(
+        compressedFile, current_release
+    )
+    if run(uncompress).failed:
+        return False
+    delete_archive = "rm -f /tmp/{}".format(compressedFile)
+    if run(delete_archive).failed:
+        return False
+    if run("rm -rf /data/web_static/current").failed:
+        return False
+    relink = "ln -s {} /data/web_static/current".format(current_release)
+    if run(relink).failed:
+        return False
+    return True
