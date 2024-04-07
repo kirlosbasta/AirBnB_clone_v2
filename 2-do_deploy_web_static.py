@@ -28,7 +28,7 @@ def do_deploy(archive_path):
     if exists(archive_path) is False:
         return False
     filename = archive_path.split('/')[-1]
-    filename_wex = filename.partition('.')[0]
+    filename_wex = filename.split('.')[0]
     path = '/data/web_static/releases/'
     if put(archive_path, '/tmp/').failed is True:
         return False
