@@ -7,7 +7,8 @@ from os.path import isdir
 
 
 def do_pack():
-    """generates a tgz archive"""
+    """archive from the contents of the web_static folder of
+    AirBnB Clone repo"""
     try:
         date = datetime.now().strftime("%Y%m%d%H%M%S")
         if isdir("versions") is False:
