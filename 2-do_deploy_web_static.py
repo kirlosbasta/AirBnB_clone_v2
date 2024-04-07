@@ -39,6 +39,8 @@ def do_deploy(archive_path):
         run('mv /data/web_static/releases/{}/web_static/* \
             /data/web_static/releases/{}/'.format(filename_wex, filename_wex))
         run('rm -rf /tmp/{}'.format(filename))
+        run('rm -rf /data/web_static/releases/{}/web_static'.format(
+            filename_wex))
         run('rm -rf /data/web_static/current')
         run('ln -s /data/web_static/releases/{}/ /data/web_static/current'.
             format(filename_wex))
