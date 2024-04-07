@@ -32,7 +32,7 @@ def do_deploy(archive_path):
         file_noEx = file.split(".")[0]
         path = "/data/web_static/releases/"
         put(archive_path, '/tmp/')
-        run('mkdir -p {}{}/'.format(path, file_noEx))
+        sudo('mkdir -p {}{}/'.format(path, file_noEx))
         run('tar -xzf /tmp/{} -C {}{}/'.format(file, path, file_noEx))
         run('rm /tmp/{}'.format(file))
         run('mv {0}{1}/web_static/* {0}{1}/'.format(path, file_noEx))
@@ -40,5 +40,5 @@ def do_deploy(archive_path):
         run('rm -rf /data/web_static/current')
         run('ln -s {}{}/ /data/web_static/current'.format(path, file_noEx))
         return True
-    except:
+    except Exception:
         return False
