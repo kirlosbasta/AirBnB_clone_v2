@@ -32,6 +32,7 @@ def do_deploy(archive_path):
         file_noEx = file.split(".")[0]
         path = "/data/web_static/releases/"
         put(archive_path, '/tmp/')
+        run("rm -rf {}{}".format(path, file_noEx))
         sudo('mkdir -p {}{}/'.format(path, file_noEx))
         run('tar -xzf /tmp/{} -C {}{}/'.format(file, path, file_noEx))
         run('rm /tmp/{}'.format(file))
