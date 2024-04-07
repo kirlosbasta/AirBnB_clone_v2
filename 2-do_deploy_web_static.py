@@ -2,7 +2,7 @@
 '''Fabric script that distributes an archive to web servers,
 using the function do_deploy'''
 from datetime import datetime
-from fabric.api import local
+from fabric.api import *
 from os.path import isdir, exists
 
 
