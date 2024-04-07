@@ -37,8 +37,8 @@ def do_deploy(archive_path):
     if run('tar -xzf /tmp/{} -C {}{}/'.format(
             filename, path, filename_wex)).failed is True:
         return False
-    if run('mv {0}{1}/web_static/* {0}{1}/'.format(path,
-                                                filename_wex)).failed is True:
+    if run('mv {0}{1}/web_static/* {0}{1}/'.format(
+                    path, filename_wex)).failed is True:
         return False
     if run('rm -rf /tmp/{}'.format(filename)).failed is True:
         return False
@@ -59,3 +59,11 @@ def deploy():
     if file is None:
         return False
     return do_deploy(file)
+
+
+def do_clean(number=0):
+    '''deletes out-of-date archives'''
+    path = '/data/web_static/releases/'
+    keep = run('ls versions')
+    print(keep)
+    print(type(keep))

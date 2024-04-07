@@ -9,30 +9,31 @@ env.hosts = ['100.25.19.62', '100.26.174.180']
 
 
 def do_deploy(archive_path):
-    """distributes an archive to the web servers"""
+    '''deploy an archive to web server'''
     if exists(archive_path) is False:
         return False
-    compressedFile = archive_path.split("/")[-1]
-    fileName = compressedFile.split(".")[0]
-    upload_path = "/tmp/{}".format(compressedFile)
-    if put(archive_path, upload_path).failed:
+    filename = archive_path.split('/')[-1]
+    filename_wex = filename.split('.')[0]
+    path = '/data/web_static/releases/'
+    if put(archive_path, '/tmp/').failed is True:
         return False
-    current_release = '/data/web_static/releases/{}'.format(fileName)
-    if run("rm -rf {}".format(current_release)).failed:
+    if run('mkdir -p {}{}'.format(
+            path, filename_wex)).failed is True:
         return False
-    if run("mkdir -p {}".format(current_release)).failed:
+    if run('tar -xzf /tmp/{} -C {}{}/'.format(
+            filename, path, filename_wex)).failed is True:
         return False
-    uncompress = "tar -xzf /tmp/{} -C {}".format(
-        compressedFile, current_release
-    )
-    if run(uncompress).failed:
+    if run('mv {0}{1}/web_static/* {0}{1}/'.format(
+                    path, filename_wex)).failed is True:
         return False
-    delete_archive = "rm -f /tmp/{}".format(compressedFile)
-    if run(delete_archive).failed:
+    if run('rm -rf /tmp/{}'.format(filename)).failed is True:
         return False
-    if run("rm -rf /data/web_static/current").failed:
+    if run('rm -rf {}{}/web_static'.format(
+            path, filename_wex)).failed is True:
         return False
-    relink = "ln -s {} /data/web_static/current".format(current_release)
-    if run(relink).failed:
+    if run('rm -rf /data/web_static/current').failed is True:
+        return False
+    if run('ln -s {}{}/ /data/web_static/current'.
+            format(path, filename_wex)).failed is True:
         return False
     return True
