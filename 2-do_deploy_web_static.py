@@ -1,26 +1,11 @@
 #!/usr/bin/python3
 '''Fabric script that distributes an archive to web servers,
 using the function do_deploy'''
-from datetime import datetime
 from fabric.api import *
-from os.path import isdir, exists
+from os.path import exists
 
 
 env.hosts = ['100.25.19.62', '100.26.174.180']
-
-
-def do_pack():
-    """archive from the contents of the web_static folder of
-    AirBnB Clone repo"""
-    try:
-        date = datetime.now().strftime("%Y%m%d%H%M%S")
-        if isdir("versions") is False:
-            local("mkdir versions")
-        file_name = "versions/web_static_{}.tgz".format(date)
-        local("tar -cvzf {} web_static".format(file_name))
-        return file_name
-    except Exception:
-        return None
 
 
 def do_deploy(archive_path):
