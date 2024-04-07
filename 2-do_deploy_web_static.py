@@ -38,7 +38,8 @@ def do_deploy(archive_path):
     if run('tar -xzf /tmp/{} -C {}{}/'.format(
             filename, path, filename_wex)).failed is True:
         return False
-    if run('mv {0}{1}/web_static/* {0}{1}/'.format(path, filename_wex)).failed is True:
+    if run('mv {0}{1}/web_static/* {0}{1}/'.format(
+                        path, filename_wex)).failed is True:
         return False
     if run('rm -rf /tmp/{}'.format(filename)).failed is True:
         return False
