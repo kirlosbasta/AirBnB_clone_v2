@@ -55,9 +55,7 @@ def do_deploy(archive_path):
 
 def deploy():
     '''creates and distributes an archive to web servers'''
-    if env.host == env.hosts[0]:
-        file = do_pack()
-        env.file = file
-    if env.file is None:
+    file = do_pack()
+    if file is None:
         return False
-    return do_deploy(env.file)
+    return do_deploy(file)
