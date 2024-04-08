@@ -76,6 +76,10 @@ def do_clean(number=0):
     to_delete = [x for x in files if x not in to_keep]
     for file in to_delete:
         local('rm -r versions/{}'.format(file))
-    to_delete_noEx = [x.split('.')[0] for x in to_delete]
-    for file in to_delete_noEx:
+    remote = run('ls {}'.format(path))
+    remote = sorted(remote.split(), reverse=True)
+    remote = [x for x in remote if 'web_static' in x]
+    remote_toKeep = remote[:number]
+    remote_toDelete = [x for x in remote if x not in remote_toKeep]
+    for file in remote_toDelete:
         run('rm -rf {}{}'.format(path, file))
