@@ -17,16 +17,16 @@ def do_deploy(archive_path):
     path = '/data/web_static/releases/'
     if put(archive_path, '/tmp/').failed is True:
         return False
-    if run('mkdir -p {}{}'.format(
+    if run('mkdir -p {}{}/'.format(
             path, filename_wex)).failed is True:
         return False
     if run('tar -xzf /tmp/{} -C {}{}/'.format(
             filename, path, filename_wex)).failed is True:
         return False
+    if run('rm  /tmp/{}'.format(filename)).failed is True:
+        return False
     if run('mv {0}{1}/web_static/* {0}{1}/'.format(
                     path, filename_wex)).failed is True:
-        return False
-    if run('rm -rf /tmp/{}'.format(filename)).failed is True:
         return False
     if run('rm -rf {}{}/web_static'.format(
             path, filename_wex)).failed is True:
