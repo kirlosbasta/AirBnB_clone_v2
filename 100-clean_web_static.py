@@ -55,10 +55,12 @@ def do_deploy(archive_path):
 
 def deploy():
     '''creates and distributes an archive to web servers'''
-    file = do_pack()
-    if file is None:
+    if env.host == env.hosts[0]:
+        file = do_pack()
+        env.file = file
+    if env.file is None:
         return False
-    return do_deploy(file)
+    return do_deploy(env.file)
 
 
 def do_clean(number=0):
