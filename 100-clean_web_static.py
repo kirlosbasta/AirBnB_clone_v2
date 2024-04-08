@@ -31,16 +31,16 @@ def do_deploy(archive_path):
     path = '/data/web_static/releases/'
     if put(archive_path, '/tmp/').failed is True:
         return False
-    if run('mkdir -p {}{}'.format(
+    if run('mkdir -p {}{}/'.format(
             path, filename_wex)).failed is True:
         return False
     if run('tar -xzf /tmp/{} -C {}{}/'.format(
             filename, path, filename_wex)).failed is True:
         return False
+    if run('rm  /tmp/{}'.format(filename)).failed is True:
+        return False
     if run('mv {0}{1}/web_static/* {0}{1}/'.format(
                     path, filename_wex)).failed is True:
-        return False
-    if run('rm -rf /tmp/{}'.format(filename)).failed is True:
         return False
     if run('rm -rf {}{}/web_static'.format(
             path, filename_wex)).failed is True:
@@ -64,6 +64,16 @@ def deploy():
 def do_clean(number=0):
     '''deletes out-of-date archives'''
     path = '/data/web_static/releases/'
-    keep = run('ls versions')
-    print(keep)
-    print(type(keep))
+    keep = local('ls versions', capture=True)
+    if type(number) == str:
+        number = eval(number)
+    if number == 0:
+        number = 1
+    files = sorted(keep.split(), reverse=True)
+    to_keep = files[:number]
+    to_delete = [x for x in files if x not in to_keep]
+    for file in to_delete:
+        local('rm -r versions/{}'.format(file))
+    to_delete_noEx = [x.split('.')[0] for x in to_delete]
+    for file in to_delete_noEx:
+        run('rm -rf {}{}'.format(path, file))
