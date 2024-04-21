@@ -37,6 +37,8 @@ class DBStorage:
         '''Return all the objects depending on the class'''
         cls_all = []
         if cls:
+            if type(cls) == str:
+                cls = eval(cls)
             cls_all = self.__session.query(cls).all()
         else:
             for key, val in classes.items():
