@@ -57,3 +57,7 @@ class FileStorage:
         if obj:
             obj_key = f'{obj.__class__.__name__}.{obj.id}'
             del self.__objects[obj_key]
+
+    def close(self):
+        '''call reload for deseralizing json file to load new instances'''
+        self.reload()
