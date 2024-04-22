@@ -53,7 +53,7 @@ article {
 }
 
 .information {
-	display: inline-block;
+	display: block;
 	height: 80px;
 	width: 100%;
 	border-top: 1px solid #DDDDDD;
@@ -66,10 +66,14 @@ article {
 }
 
 .max_guest, .number_rooms, .number_bathrooms {
-	display: block;
+	display: inline-block;
 	width: 100px;
 	text-align: center;
 	margin: 0px auto;
+}
+
+.max_guest p, .number_rooms p, .number_bathrooms p {
+	padding-top: 35px;
 }
 
 .user {
