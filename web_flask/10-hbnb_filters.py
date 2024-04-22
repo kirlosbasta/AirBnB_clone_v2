@@ -6,6 +6,13 @@ from models import storage
 
 app = Flask(__name__)
 
+@app.route('/hbnb_filters', strict_slashes=False)
+def hbnb_filters():
+    '''return html page about hbnb_filter'''
+    states = storage.all("State")
+    amenities = storage.all("Amenity")
+    return render_template('10-hbnb_filters.html', states=states, amenities=amenities)
+
 
 @app.teardown_appcontext
 def teardown(exec):
