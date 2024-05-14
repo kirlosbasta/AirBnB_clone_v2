@@ -1,42 +1,39 @@
 #!/usr/bin/python3
-'''script that starts a Flask web application'''
+""" Starts a Flash Web Application Python is Cool"""
 from flask import Flask
-from markupsafe import escape
-
-
 app = Flask(__name__)
 
 
 @app.route('/', strict_slashes=False)
-def hello():
-    '''return Hello HBNB! for root URL'''
+def hello_hbnb():
+    """ Prints a Message when / is called """
     return 'Hello HBNB!'
 
 
 @app.route('/hbnb', strict_slashes=False)
 def hbnb():
-    '''return HBNB for /hbnb URL'''
+    """ Prints a Message when /hbnb is called """
     return 'HBNB'
 
 
 @app.route('/c/<text>', strict_slashes=False)
-def c_route(text):
-    '''return C followed by text for /c/<text> URL'''
-    return f"C {escape(text).replace('_', ' ')}"
+def c_is_fun(text):
+    """ Prints a Message when /c is called """
+    return "C " + text.replace('_', ' ')
 
 
-@app.route('/python/<text>', strict_slashes=False)
 @app.route('/python', strict_slashes=False)
-def python_route(text='is cool'):
-    '''return Python followed by text for /python/<text> URL'''
-    return f"Python {escape(text).replace('_', ' ')}"
+@app.route('/python/<text>', strict_slashes=False)
+def python_is_cool(text='is_cool'):
+    """ Prints a Message when /python is called """
+    return "Python " + text.replace('_', ' ')
 
 
-@app.route('/number/<int:n>')
-def number(n):
-    '''return n is a number for /number/<n> URL'''
-    return f"{escape(n)} is a number"
+@app.route('/number/<int:n>', strict_slashes=False)
+def is_n_number(n):
+    """ Prints a Message when /number is called only if n is an int"""
+    return "{:d} is a number".format(n)
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
+    """ Main Function """
     app.run(host='0.0.0.0', port=5000)

@@ -1,29 +1,26 @@
 #!/usr/bin/python3
-'''script that starts a Flask web application'''
+""" Starts a Flash Web Application C is FUN"""
 from flask import Flask
-from markupsafe import escape
-
-
 app = Flask(__name__)
 
 
 @app.route('/', strict_slashes=False)
-def hello():
-    '''return Hello HBNB! for root URL'''
+def hello_hbnb():
+    """ Prints a Message when / is called """
     return 'Hello HBNB!'
 
 
 @app.route('/hbnb', strict_slashes=False)
 def hbnb():
-    '''return HBNB for /hbnb URL'''
+    """ Prints a Message when /hbnb is called """
     return 'HBNB'
 
 
 @app.route('/c/<text>', strict_slashes=False)
-def c_route(text):
-    '''return C followed by text for /c/<text> URL'''
-    return f"C {escape(text).replace('_', ' ')}"
+def c_is_fun(text):
+    """ Prints a Message when /c is called """
+    return "C " + text.replace('_', ' ')
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
+    """ Main Function """
     app.run(host='0.0.0.0', port=5000)
